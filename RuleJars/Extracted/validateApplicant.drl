@@ -1,0 +1,63 @@
+package ValidateAccountHolderAge;
+//generated from Decision Table
+import com.programmertech.model.Applicant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+function long calculateAge(String date) {
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+  LocalDate dob = LocalDate.parse(date, formatter);
+        long years=dob.until(LocalDate.now(), ChronoUnit.YEARS);
+return years;
+}
+
+rule "validateAgeRule_Female"
+	activation-group "Age-group"
+	when
+		accH:Applicant(eval(calculateAge(accH.getDob()))>=14, accH.getGender() in ("F"))
+	then
+		accH.setValidApplicant(true);
+		accH.setApplicantType("General");
+end
+
+rule "validateAgeRule_Male"
+	activation-group "Age-group"
+	when
+		accH:Applicant(eval(calculateAge(accH.getDob()))>=16, accH.getGender() in ("M"))
+	then
+		accH.setValidApplicant(true);
+		accH.setApplicantType("General");
+end
+
+rule "seniorCitizenRule"
+	activation-group "seniorChk-group"
+	when
+		accH:Applicant(eval(calculateAge(accH.getDob()))>=65)
+	then
+		accH.setApplicantType("Senior Citizen");
+end
+
+rule "AccountOpeningAmountRule"
+	activation-group "amount-group"
+	when
+		accH:Applicant(eval(calculateAge(accH.getDob()))>=65)
+	then
+		accH.setAccountOpenAmt(500.0);
+end
+
+rule "AccountOpeningAmountRule1"
+	activation-group "amount-group"
+	when
+		accH:Applicant(accH.getGender() in ("F"))
+	then
+		accH.setAccountOpenAmt(700.0);
+end
+
+rule "AccountOpeningAmountRule2"
+	activation-group "amount-group"
+	when
+		accH:Applicant(eval(calculateAge(accH.getDob()))>=18)
+	then
+		accH.setAccountOpenAmt(1000.0);
+end

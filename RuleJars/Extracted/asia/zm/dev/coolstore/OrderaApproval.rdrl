@@ -1,0 +1,11 @@
+package asia.zm.dev.coolstore;
+
+import java.lang.Number;
+
+rule "OrderaApproval"
+	dialect "mvel"
+	when
+		order : Order( orderValue == 110.0 )
+	then
+		order.setApprovingOffocer( "Raj" );
+end

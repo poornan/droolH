@@ -1,0 +1,14 @@
+package asia.zm.dev.coolstore;
+
+import java.lang.Number;
+
+rule "availability"
+	dialect "mvel"
+	when
+		prd : Product( prdId : itemId != null )
+	then
+		modify( prd ) {
+				setPrice( 110.0 ), 
+				setAvailable( true )
+		}
+end

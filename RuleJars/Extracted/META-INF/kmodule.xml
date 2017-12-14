@@ -1,0 +1,7 @@
+<kmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns="http://www.drools.org/xsd/kmodule">
+  <kbase name="kbase1" default="true" eventProcessingMode="stream" equalsBehavior="identity" declarativeAgenda="disabled" scope="javax.enterprise.context.ApplicationScoped" packages="asia.zm.dev.coolstore">
+    <ksession name="ksession1" type="stateless" default="true" clockType="realtime" beliefSystem="simple" scope="javax.enterprise.context.ApplicationScoped"/>
+    <ksession name="testSession" type="stateful" default="false" clockType="realtime" beliefSystem="simple" scope="javax.enterprise.context.ApplicationScoped"/>
+  </kbase>
+</kmodule>
